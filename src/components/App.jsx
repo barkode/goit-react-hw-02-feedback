@@ -2,40 +2,38 @@ import React, { Component } from 'react';
 import './App.module.css';
 
 class App extends Component {
-  static defaultsProps = {};
-
-  static propTypes = {};
-
-  state = {
+  static defaultProps = {
     good: 0,
     neutral: 0,
     bad: 0,
   };
 
-  handleFeedbackGood = () => {
-    this.setState(prevState => {
-      return { good: prevState.good + 1 };
-    });
-  };
-  handleFeedbackNeutral = () => {
-    this.setState(prevState => {
-      return {
-        neutral: prevState.neutral + 1,
-      };
-    });
-  };
-  handleFeedbackBad = () => {
-    this.setState(prevState => {
-      return {
-        bad: prevState.bad + 1,
-      };
-    });
+  static propTypes = {};
+
+  state = {
+    good: this.props.good,
+    neutral: this.props.neutral,
+    bad: this.props.bad,
   };
 
-  countTotalFeedback = () => {};
-  countPositiveFeedbackPercentage = () => {};
-  countNeutralFeedbackPercentage = () => {};
-  countBadFeedbackPercentage = () => {};
+  handleFeedbackGood = () => {
+    this.setState(prevState => ({ good: prevState.good + 1 }));
+  };
+  handleFeedbackNeutral = () => {
+    this.setState(prevState => ({ neutral: prevState.neutral + 1 }));
+  };
+  handleFeedbackBad = () => {
+    this.setState(prevState => ({ bad: prevState.bad + 1 }));
+  };
+
+  countTotalFeedback = () => {
+    return this.state.good + this.state.neutral + this.state.bad;
+  };
+  countPositiveFeedbackPercentage = () => {
+    return this.countTotalFeedback()
+      ? ((this.state.good * 100) / this.countTotalFeedback()).toFixed()
+      : 0;
+  };
 
   render() {
     return (
@@ -61,10 +59,8 @@ class App extends Component {
           <li>Good: {this.state.good}</li>
           <li>Neutral: {this.state.neutral}</li>
           <li>Bad: {this.state.bad}</li>
-          <li>Total: 000</li>
-          <li>Positive feedback: 0%</li>
-          <li>Neutral feedback: 0%</li>
-          <li>Bad feedback: 0%</li>
+          <li>Total: {this.countTotalFeedback()}</li>
+          <li>Positive feedback: {this.countPositiveFeedbackPercentage()} %</li>
         </ul>
       </div>
     );
