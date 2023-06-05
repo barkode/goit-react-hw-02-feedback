@@ -19,6 +19,7 @@ class App extends Component {
   handleFeedbackGood = () => {
     this.setState(prevState => ({ good: prevState.good + 1 }));
   };
+
   handleFeedbackNeutral = () => {
     this.setState(prevState => ({ neutral: prevState.neutral + 1 }));
   };
@@ -37,7 +38,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <p>Please leave feedback</p>
         <p>
           <button type="button" onClick={this.handleFeedbackGood}>
@@ -54,15 +55,21 @@ class App extends Component {
             Bad
           </button>
         </p>
-        <p>Statistics:</p>
-        <ul>
-          <li>Good: {this.state.good}</li>
-          <li>Neutral: {this.state.neutral}</li>
-          <li>Bad: {this.state.bad}</li>
-          <li>Total: {this.countTotalFeedback()}</li>
-          <li>Positive feedback: {this.countPositiveFeedbackPercentage()} %</li>
-        </ul>
-      </div>
+        {this.countTotalFeedback() !== 0 && (
+          <div>
+            <p>Statistics:</p>
+            <ul>
+              <li>Good: {this.state.good}</li>
+              <li>Neutral: {this.state.neutral}</li>
+              <li>Bad: {this.state.bad}</li>
+              <li>Total: {this.countTotalFeedback()}</li>
+              <li>
+                Positive feedback: {this.countPositiveFeedbackPercentage()} %
+              </li>
+            </ul>
+          </div>
+        )}
+      </>
     );
   }
 }
