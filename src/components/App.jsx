@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import FeedBackOptions from './Controls/FeedbackOptions';
+import Statistics from './Statistics/Statistics';
+import Notification from './Notification/Notifiration';
 import './App.module.css';
-
 class App extends Component {
   static defaultProps = {
     good: 0,
@@ -28,7 +30,8 @@ class App extends Component {
   };
 
   countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
   };
   countPositiveFeedbackPercentage = () => {
     return this.countTotalFeedback()
@@ -37,6 +40,7 @@ class App extends Component {
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
     return (
       <>
         <p>Please leave feedback</p>
@@ -55,19 +59,16 @@ class App extends Component {
             Bad
           </button>
         </p>
-        {this.countTotalFeedback() !== 0 && (
-          <div>
-            <p>Statistics:</p>
-            <ul>
-              <li>Good: {this.state.good}</li>
-              <li>Neutral: {this.state.neutral}</li>
-              <li>Bad: {this.state.bad}</li>
-              <li>Total: {this.countTotalFeedback()}</li>
-              <li>
-                Positive feedback: {this.countPositiveFeedbackPercentage()} %
-              </li>
-            </ul>
-          </div>
+        {this.countTotalFeedback() !== 0 ? (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={this.countTotalFeedback()}
+            positivePercentage={this.countPositiveFeedbackPercentage()}
+          />
+        ) : (
+          <Notification message="There is no feedback" />
         )}
       </>
     );
