@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import propTypes from 'prop-types';
+import css from './FeedbackOptions.module.css';
 
 class FeedBackOptions extends Component {
   static propTypes = {
@@ -9,14 +10,15 @@ class FeedBackOptions extends Component {
   render() {
     const { options, onLeaveFeedback } = this.props;
     return (
-      <div>
+      <div className={css.feedbackOptions}>
         {options.map(option => (
           <button
+            className={css.button55}
             type="button"
             key={option}
             onClick={() => onLeaveFeedback(option)}
           >
-            {option}
+            <span className="glowing-txt">{option}</span>
           </button>
         ))}
       </div>
